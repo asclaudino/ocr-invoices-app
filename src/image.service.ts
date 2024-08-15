@@ -6,6 +6,13 @@ import { Image, Prisma } from '@prisma/client';
 export class ImageService {
   constructor(private prisma: PrismaService) {}
 
+  upload(): any {
+    console.log('a request chegou aqui!');
+    return {
+      message: 'deu certo!',
+    }
+  }
+
   async image(
     imageWhereUniqueInput: Prisma.ImageWhereUniqueInput,
   ): Promise<Image | null> {
