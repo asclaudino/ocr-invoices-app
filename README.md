@@ -31,6 +31,7 @@ This is a NestJS backend application that handles image uploads, stores them in 
 ## Features
 
 - **Image Upload**: Accepts image files via multipart/form-data.
+- **Database Management**: Uses Prisma ORM to interact with a Supabase-hosted PostgreSQL database.
 - **Supabase Storage**: Stores the uploaded images in a Supabase storage bucket.
 - **OCR Processing**: Utilizes Tesseract.js to process the images and extract text.
 - **API Response**: Returns the extracted text along with the image URL stored in Supabase.
