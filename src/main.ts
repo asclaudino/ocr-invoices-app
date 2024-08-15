@@ -5,7 +5,10 @@ import dotenv from 'dotenv';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(cors());
-  await app.listen(8000);
+  app.use(cors({
+    origin: 'https://ocr-invoices-app-ariel-silva-claudinos-projects.vercel.app/',
+    credentials: true,
+  }));
+  await app.listen(3000);
 }
 bootstrap();
