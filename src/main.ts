@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cors({
     origin: 'https://file-uploader-tawny.vercel.app',
-    methods: Post,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   }));
   await app.listen(3000);
