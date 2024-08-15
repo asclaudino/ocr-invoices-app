@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserService } from './user.service';
@@ -8,6 +8,7 @@ import { PrismaService } from './prisma.service';
 import { S3Service } from './s3.service';
 import { ConfigModule } from '@nestjs/config';
 import { OCRExtractService } from './ocr-extract.service';
+import { CorsMiddleware } from './cors.middleware';
 
 
 @Module({
@@ -23,4 +24,9 @@ import { OCRExtractService } from './ocr-extract.service';
               OCRExtractService,
               OCRResultService,PrismaService, S3Service],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+  consumer
+    .apply(CorsMiddleware)
+    .forRoutes('*');
+}}
