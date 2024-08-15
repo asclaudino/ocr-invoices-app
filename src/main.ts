@@ -6,13 +6,14 @@ import { Post } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(cors({
-    origin: 'https://file-uploader-tawny.vercel.app',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-    credentials: true,
-  }));
+  // app.use(cors({
+  //   origin: 'https://file-uploader-tawny.vercel.app',
+  //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  //   preflightContinue: false,
+  //   optionsSuccessStatus: 204,
+  //   credentials: true,
+  // }));
+  app.enableCors();
   await app.listen(3000);
 }
 bootstrap();
