@@ -24,14 +24,49 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# OCR Backend - NestJS
 
-## Installation
+This is a NestJS backend application that handles image uploads, stores them in a Supabase bucket, processes the images using Tesseract.js to perform Optical Character Recognition (OCR), and returns the extracted text in the response.
 
-```bash
-$ npm install
-```
+## Features
 
+- **Image Upload**: Accepts image files via multipart/form-data.
+- **Database Management**: Uses Prisma ORM to interact with a Supabase-hosted PostgreSQL database.
+- **Supabase Storage**: Stores the uploaded images in a Supabase storage bucket.
+- **OCR Processing**: Utilizes Tesseract.js to process the images and extract text.
+- **API Response**: Returns the extracted text along with the image URL stored in Supabase.
+
+## Technologies Used
+
+- **NestJS**: A progressive Node.js framework for building efficient and scalable server-side applications.
+- **Multer**: Middleware for handling `multipart/form-data` for file uploads.
+- **Supabase**: Used for storing uploaded images in a cloud storage bucket.
+- **Tesseract.js**: JavaScript library for performing OCR on images.
+- **TypeScript**: Type-safe language that builds on JavaScript.
+
+## Getting Started
+
+To run this project locally, follow the steps below:
+
+### Prerequisites
+
+- **Node.js**: Ensure that you have Node.js installed. Download it from [nodejs.org](https://nodejs.org/).
+- **NPM or Yarn**: A package manager for Node.js.
+- 
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/asclaudino/ocr-invoices-app.git
+   cd ocr-invoices-app
+2. **Installation**
+    ```bash
+    $ npm install
+    ```
+3. **Creating a env file**
+      ```bash
+      touch .env
+- To paste it the actual keys please send me a message.
+   
 ## Running the app
 
 ```bash
@@ -44,30 +79,6 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
 ## License
 
 Nest is [MIT licensed](LICENSE).
