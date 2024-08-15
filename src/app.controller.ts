@@ -53,8 +53,13 @@ export class AppController {
   @UseInterceptors(FileInterceptor('file'))
   @HttpCode(HttpStatus.CREATED)
   async upload(@UploadedFile() file: Express.Multer.File, @Res() res: Response) : Promise<any> {
-    console.log(file);
-    console.log('A request chegou aqui baby!');
+  
+    if(!file.buffer || !file.originalname){
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        message: 'File upload failed',
+      });
+    }
     try {
       const result = await this.s3Service.uploadFile(file);
       const filename = file.originalname;
@@ -70,16 +75,24 @@ export class AppController {
         }
       });
 
-      console.log('created image: ', createdImage);
 
       const extractedText = await this.ocrextractService.extractText(path);
 
-      console.log('extracted text: ', extractedText);
+
+      //Creating the ocr result at the DB 
+      const createdOCRResult = await this.ocrresultService.createOCRResult({
+        resultText: extractedText,
+        image: {
+          connect: {id : Number(createdImage.id)},
+        }
+      });
+
 
       return res.status(HttpStatus.CREATED).json({
         success: true,
         message: result.message,
         fileUrl: result.fileUrl,
+        text: extractedText,
       });
     } catch (error) {
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
@@ -87,12 +100,6 @@ export class AppController {
         message: 'File upload failed',
       });
     }
-    // return {
-    //   success: true,
-    //   message: result.message,
-    //   fileUrl: result.fileUrl, // Return the file URL in the response
-    // };
-    //return this.imageService.upload();
   }
 
   @Post('/image')
@@ -120,68 +127,4 @@ export class AppController {
       password: password,
     });
   }
-  // @Post('post')
-  // async createDraft(
-    //   @Body() postData: { title: string; content?: string; authorEmail: string },
-    // ): Promise<PostModel> {
-      //   const { title, content, authorEmail } = postData;
-      //   return this.postService.createPost({
-        //     title,
-        //     content,
-        //     author: {
-      //       connect: { email: authorEmail },
-      //     },
-    //   });
-    // }
-  // @Get('post/:id')
-  // async getPostById(@Param('id') id: string): Promise<PostModel> {
-  //   return this.postService.post({ id: Number(id) });
-  // }
-
-  // @Get('feed')
-  // async getPublishedPosts(): Promise<PostModel[]> {
-  //   return this.postService.posts({
-  //     where: { published: true },
-  //   });
-  // }
-
-  // @Get('filtered-posts/:searchString')
-  // async getFilteredPosts(
-  //   @Param('searchString') searchString: string,
-  // ): Promise<PostModel[]> {
-  //   return this.postService.posts({
-  //     where: {
-  //       OR: [
-  //         {
-  //           title: { contains: searchString },
-  //         },
-  //         {
-  //           content: { contains: searchString },
-  //         },
-  //       ],
-  //     },
-  //   });
-  // }
-  
-  
-
-  // @Post('user')
-  // async signupUser(
-  //   @Body() userData: { name?: string; email: string },
-  // ): Promise<UserModel> {
-  //   return this.userService.createUser(userData);
-  // }
-
-  // @Put('publish/:id')
-  // async publishPost(@Param('id') id: string): Promise<PostModel> {
-  //   return this.postService.updatePost({
-  //     where: { id: Number(id) },
-  //     data: { published: true },
-  //   });
-  // }
-
-  // @Delete('post/:id')
-  // async deletePost(@Param('id') id: string): Promise<PostModel> {
-  //   return this.postService.deletePost({ id: Number(id) });
-  // }
 }

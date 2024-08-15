@@ -24,9 +24,4 @@ import { CorsMiddleware } from './cors.middleware';
               OCRExtractService,
               OCRResultService,PrismaService, S3Service],
 })
-export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-  consumer
-    .apply(CorsMiddleware)
-    .forRoutes('*');
-}}
+export class AppModule {}

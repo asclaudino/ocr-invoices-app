@@ -41,7 +41,6 @@ export class S3Service {
         data,
       };
     } catch (err) {
-      console.error('Error uploading file: ', err);
       throw new Error('Error uploading file');
     }
   }
