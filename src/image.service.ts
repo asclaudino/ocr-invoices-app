@@ -7,7 +7,6 @@ export class ImageService {
   constructor(private prisma: PrismaService) {}
 
   upload(): any {
-    console.log('a request chegou aqui!');
     return {
       message: 'deu certo!',
     }
